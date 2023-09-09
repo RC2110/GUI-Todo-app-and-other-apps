@@ -95,6 +95,9 @@
 # from functions import get_todos, write_todos
 import functions
 import time
+from teller.converter import fns2
+
+# print(fns2.__name__)
 
 # print(help(get_todos))
 while True:

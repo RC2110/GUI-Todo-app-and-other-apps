@@ -109,6 +109,9 @@
 # webbrowser.open("https://www.instagram.com")
 
 import json
+import time
+
+print(time.strftime("%A %b %d %Y, %I:%M %p"))
 
 with open("Experiments/quiz.json", 'r') as file:
     content = file.read()
