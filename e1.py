@@ -117,8 +117,8 @@ with open("Experiments/quiz.json", 'r') as file:
     content = file.read()
 
 data = json.loads(content)
-print(data)
-print(len(data))
+# print(data)
+# print(len(data))
 
 for w, i in enumerate(data):
     print(f"Question-{w+1}", i['question'])
