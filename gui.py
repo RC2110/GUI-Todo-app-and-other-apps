@@ -1,15 +1,5 @@
 # import PySimpleGUI as psg
 #
-# label = psg.Text("Enter your Todo")
-# userip = psg.InputText()
-#
-# icon = psg.Button("Add")
-# window = psg.Window("Your To-Do app", layout=[[label, userip], [icon]])
-# window.read()
-# window.close
-
-# import PySimpleGUI as psg
-#
 # label1 = psg.Text("Select files to compress:")
 # input1 = psg.Input()
 # useraction1=psg.FilesBrowse("Choose")
@@ -37,14 +27,52 @@
 # window.read()
 # window.close()
 
-import PySimpleGUI as psg
-label = psg.Text("What are dolphins?")
-userchoice1= psg.Radio("Amphibians", group_id="question1")
-userchoice2= psg.Radio("Reptiles", group_id="question1")
-userchoice3= psg.Radio("Mammals", group_id="question1")
-userchoice4= psg.Radio("Birds", group_id="question1")
-switch = psg.Button("Submit")
+# import PySimpleGUI as psg
+# label = psg.Text("What are dolphins?")
+# userchoice1= psg.Radio("Amphibians", group_id="question1")
+# userchoice2= psg.Radio("Reptiles", group_id="question1")
+# userchoice3= psg.Radio("Mammals", group_id="question1")
+# userchoice4= psg.Radio("Birds", group_id="question1")
+# switch = psg.Button("Submit")
+#
+# window = psg.Window("Questionnaire", layout= [[label],[userchoice1,userchoice2,userchoice3,userchoice4],[switch]])
+# window.read()
+# window.close()
 
-window = psg.Window("Questionnaire", layout= [[label],[userchoice1,userchoice2,userchoice3,userchoice4],[switch]])
-window.read()
+import PySimpleGUI as psg
+import functions
+
+label1= psg.Text("Enter a Todo", font=('Helvetica', 15))
+userip=psg.InputText(tooltip="Enter Todo", font=('Helvetica', 15), size=(33,10),
+                     key="usr_ip")
+e_lst=psg.Listbox(functions.get_todos(), enable_events=True, size=(50, 10), key='elist')
+elst_button=psg.Button("Edit")
+button=psg.Button("Add")
+
+window = psg.Window("Your Todo app", layout=[[label1],[userip,button],[e_lst,elst_button]])
+
+while True:
+    event = window.read()
+    action, input = event
+    print(event)
+    print(action)
+    print(input)
+    match action:
+        case "Add":
+            e_todos= functions.get_todos()
+            new_todos=input['usr_ip'] + '\n'
+            e_todos.append(new_todos)
+            functions.write_todos(e_todos)
+            window['elist'].update(values=e_todos)
+            print(e_todos)
+
+        case psg.WIN_CLOSED:
+            break
+
+
+
+
+
 window.close()
+
+
