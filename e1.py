@@ -107,40 +107,68 @@
 # import webbrowser
 # # i=input("Enter a keyword:")
 # webbrowser.open("https://www.instagram.com")
+#
+# import json
+# import time
+#
+# print(time.strftime("%A %b %d %Y, %I:%M %p"))
+#
+# with open("Experiments/quiz.json", 'r') as file:
+#     content = file.read()
+#
+# data = json.loads(content)
+# # print(data)
+# # print(len(data))
+#
+# for w, i in enumerate(data):
+#     print(f"Question-{w+1}", i['question'])
+#     for index, m in enumerate(i['options']):
+#         print(f"{index+1}.{m}")
+#     user_choice=int(input("Enter your answer:"))
+#     i['user choice']= user_choice
+#
+# sum=0
+# for j, k in enumerate(data):
+#     if k['user choice'] == k['Correct answer']:
+#         sum=sum+1
+#         result="Correct Answer"
+#     else:
+#         result="Correct Answer"
+#
+#     print(f"question{j+1}- Userinput{k['user choice']},"
+#           f"correct answer{k['Correct answer']}")
+#
+# print("Results:\n", sum, '/', len(data))
 
-import json
-import time
-
-print(time.strftime("%A %b %d %Y, %I:%M %p"))
-
-with open("Experiments/quiz.json", 'r') as file:
-    content = file.read()
-
-data = json.loads(content)
-# print(data)
-# print(len(data))
-
-for w, i in enumerate(data):
-    print(f"Question-{w+1}", i['question'])
-    for index, m in enumerate(i['options']):
-        print(f"{index+1}.{m}")
-    user_choice=int(input("Enter your answer:"))
-    i['user choice']= user_choice
-
-sum=0
-for j, k in enumerate(data):
-    if k['user choice'] == k['Correct answer']:
-        sum=sum+1
-        result="Correct Answer"
-    else:
-        result="Correct Answer"
-
-    print(f"question{j+1}- Userinput{k['user choice']},"
-          f"correct answer{k['Correct answer']}")
-
-print("Results:\n", sum, '/', len(data))
-
-
+# import PySimpleGUI as psg
+# from teller.converter.fns import make_archive
+#
+# label1=psg.Text("Select Files to compress")
+# userinp1=psg.InputText()
+# label2=psg.Text("Select destination folder")
+# userinp2=psg.InputText()
+# button1=psg.FilesBrowse(key="Files")
+# button2=psg.FolderBrowse(key="Folder")
+# outputtext=psg.Text(key='output')
+# switch=psg.Button("Convert")
+#
+# window=psg.Window("File Compressor", layout=[[label1, userinp1,button1], [label2, userinp2, button2],[switch,outputtext]])
+# while True:
+#     event=window.read()
+#     print(1,"event", event)
+#     action,data= event
+#     print(2,"action", action)
+#     print(3,"data",data)
+#     filelist=data['Files'].split(';')
+#     folder=data['Folder']
+#     print(filelist)
+#     print(folder)
+#     print("string")
+#     make_archive(filelist,folder)
+#     window['output'].update(value="Conversion Complete!")
+#
+# window.read()
+# window.close()
 
 
 

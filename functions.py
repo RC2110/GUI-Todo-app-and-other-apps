@@ -1,4 +1,4 @@
-def get_todos(filepath='todos.txt'):
+def get_todos(filepath='../../todos.txt'):
     """ open the file from the file path and fetch the list of
     todos."""
     with open(filepath) as file_local:
@@ -21,3 +21,4 @@ if __name__ == "__main__":
     print("Hi, I'm here!")
 
 gvh= 87
+

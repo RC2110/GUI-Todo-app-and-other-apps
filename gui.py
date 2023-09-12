@@ -67,7 +67,7 @@ while True:
             print(e_todos)
         case "Edit":
             todos=functions.get_todos()
-            ntodo=input['usr_ip']
+            ntodo=input['usr_ip']+'\n'
             tdo2edit=input['elist'][0]
             indx=todos.index(tdo2edit)
             todos[indx]=ntodo
