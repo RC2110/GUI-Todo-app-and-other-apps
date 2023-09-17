@@ -1,34 +1,18 @@
-# def get_average():
-#     with open('test/test/test.txt', 'r') as file_local:
-#          degrees = file_local.readlines()
-#          degrees = degrees[1:]
-#          values=[float(i) for i in degrees]
-#          print(values)
-#          average= sum(values)/len(values)
-#     return average
 #
-# f=get_average()
-# print(f)
+
+import functions
 
 
-# def get_maximum(degrees):
-#     # celsius_local = [14, 15.1, 12.3]
-#     maximum = max(degrees)
-#     return maximum
-#
-# # celsius = get_maximum([14, 15.1, 12.3])
-# fahrenheit = celsius * 1.8 + 32
-#
-# print(fahrenheit)
+celsius = functions.get_maximum([14, 15.1, 12.3])
+fahrenheit = celsius * 1.8 + 32
 
-# def greet(message):
-#     message=message.capitalize()
-#     print("hey hey")
-#     return message
-#
-# mesg= input("What greeting do you want?")
-# meeting =  greet(mesg)
-# print(meeting)
+print(fahrenheit)
+
+
+
+mesg= input("What greeting do you want?")
+meeting =  functions.greet(mesg)
+print(meeting)
 
 
 # from test import fns2
@@ -113,12 +97,13 @@
 #
 # print(time.strftime("%A %b %d %Y, %I:%M %p"))
 #
+# import json
 # with open("Experiments/quiz.json", 'r') as file:
 #     content = file.read()
 #
 # data = json.loads(content)
-# # print(data)
-# # print(len(data))
+# print(data)
+# print(len(data))
 #
 # for w, i in enumerate(data):
 #     print(f"Question-{w+1}", i['question'])
@@ -170,10 +155,72 @@
 # window.read()
 # window.close()
 
+#
+# import PySimpleGUI as psg
+# from functions import convert
+#
+# label1=psg.Text("Enter Feet:")
+# inp1=psg.InputText(key="ft")
+# label2=psg.Text("Enter inch:")
+# inp2=psg.InputText(key="inches")
+# button1=psg.Button("Convert")
+# outp=psg.Text(key="answer")
+# button2=psg.Button("Exit")
+#
+#
+# window = psg.Window("feet inches converter", layout=[[label1,inp1],[label2,inp2],
+#                                                      [button1,outp],[button2]])
+# while True:
+#     data=window.read()
+#     event, inpt = data
+#     match event:
+#         case "Exit":
+#             break
+#         case psg.WIN_CLOSED:
+#             break
+#     feet=inpt['ft']
+#     inch=inpt['inches']
+#     try:
+#         m=convert(feet,inch)
+#         window["answer"].update(value=m)
+#     except ValueError:
+#         psg.popup("Enter 2 numbers")
 
-
-
-
+# import PySimpleGUI as sg
+# from functions import convert
+#
+# sg.theme("Black")
+#
+# feet_label = sg.Text("Enter feet: ")
+# feet_input = sg.Input(key="feet")
+#
+# inches_label = sg.Text("Enter inches: ")
+# inches_input = sg.Input(key="inches")
+#
+# button = sg.Button("Convert")
+# output_label = sg.Text("", key="output")
+# exit_button = sg.Button("Exit")
+#
+# window = sg.Window("Convertor",
+#                    layout=[[feet_label, feet_input],
+#                            [inches_label, inches_input],
+#                            [button, exit_button, output_label]])
+#
+# while True:
+#     event, values = window.read()
+#     match event:
+#         case "Exit":
+#             break
+#         case sg.WIN_CLOSED:
+#             break
+#     feet = float(values["feet"])
+#     inches = float(values["inches"])
+#
+#     result = convert(feet, inches)
+#     window["output"].update(value=f"{result} m", text_color="white")
+#
+#
+# window.close()
 
 
 

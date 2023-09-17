@@ -1,83 +1,82 @@
-# import PySimpleGUI as psg
-#
-# label1 = psg.Text("Select files to compress:")
-# input1 = psg.Input()
-# useraction1=psg.FilesBrowse("Choose")
-#
-#
-# label2= psg.Text("Select destination folder:")
-# input2 = psg.Input()
-# useraction2=psg.FolderBrowse("Choose")
-#
-# switch = psg.Button("Compress")
-#
-# window = psg.Window("Compress Files", layout=[[label1,input1,useraction1], [label2,input2,useraction2],[switch]])
-# window.read()
-# window.close()
-
-# import PySimpleGUI as pg
-# label1 = pg.Text("Enter Feet:")
-# user_input1 = pg.InputText()
-# label2 = pg.Text("Enter Inch:")
-# user_input2 = pg.InputText()
-#
-# switch = pg.Button("Convert")
-#
-# window = pg.Window("Convertor", layout=[[label1,user_input1],[label2, user_input2],[switch]])
-# window.read()
-# window.close()
-
-# import PySimpleGUI as psg
-# label = psg.Text("What are dolphins?")
-# userchoice1= psg.Radio("Amphibians", group_id="question1")
-# userchoice2= psg.Radio("Reptiles", group_id="question1")
-# userchoice3= psg.Radio("Mammals", group_id="question1")
-# userchoice4= psg.Radio("Birds", group_id="question1")
-# switch = psg.Button("Submit")
-#
-# window = psg.Window("Questionnaire", layout= [[label],[userchoice1,userchoice2,userchoice3,userchoice4],[switch]])
-# window.read()
-# window.close()
-
 import PySimpleGUI as psg
 import functions
+import time
+import os
 
-label1= psg.Text("Enter a Todo", font=('Helvetica', 15))
-userip=psg.InputText(tooltip="Enter Todo", font=('Helvetica', 15), size=[33,10],
-                     key="usr_ip")
-e_lst=psg.Listbox(functions.get_todos(), enable_events=True, size=[50, 10], key='elist')
-elst_button=psg.Button("Edit")
-button=psg.Button("Add")
+if not os.path.exists('todos.txt'):
+    with open('todos.txt', 'w') as file:
+         pass
 
-window = psg.Window("Your Todo app", layout=[[label1],[userip,button],[e_lst,elst_button]])
-
+# psg.theme_previewer()
+ctime=psg.Text(key="tm")
+label = psg.Text("Enter a Todo")
+userip=psg.InputText(tooltip="Enter todo", key="user_ip")
+button=psg.Button(image_source='neww.png',key='Add', image_size=(20,20), mouseover_colors='DarkGreen')
+e_list=psg.Listbox(values=functions.get_todos(), size=[45,10],
+                   enable_events=True, key="ex_list")
+button2=psg.Button("Edit")
+button3=psg.Button("Complete")
+button4 = psg.Button("Exit")
+# Dynamic way of defining layouts
+# button=["add","edit", "close"]
+# layout=[]
+# for i in button:
+#     layout.append(psg.Button([i]))
+psg.theme('DarkTeal3')
+# psg.theme('Green Mono')
+window=psg.Window("Your Todo app", layout=[[ctime],
+                                           [label],
+                                           [userip, button],
+                                           [e_list,button2, button3],
+                                           [button4]])
 while True:
-    event = window.read()
-    action, input = event
-    print(1,"event", event)
-    print(2,"action",action)
-    print(3,"input",input)
-    match action:
+    data=window.read(timeout=100)
+    window['tm'].update(value=time.strftime("%A %b %d %Y, %I:%M:%S %p"))
+    event, inp = data
+    print(event)
+    print(inp)
+    match event:
         case "Add":
-            e_todos= functions.get_todos()
-            new_todos=input['usr_ip'] + '\n'
-            e_todos.append(new_todos)
-            functions.write_todos(e_todos)
-            window['elist'].update(values=e_todos)
-            print(e_todos)
+            if inp['user_ip']=='':
+                psg.popup("Enter a todo")
+            else:
+                todos=functions.get_todos()
+                ntodo= inp['user_ip']+'\n'
+                todos.append(ntodo)
+                functions.write_todos(todos)
+                window['ex_list'].update(values=todos)
         case "Edit":
-            todos=functions.get_todos()
-            ntodo=input['usr_ip']+'\n'
-            tdo2edit=input['elist'][0]
-            indx=todos.index(tdo2edit)
-            todos[indx]=ntodo
-            functions.write_todos(todos)
-            window['elist'].update(values=todos)
-        case "elist":
-            window['usr_ip'].update(value=input['elist'][0])
+            try:
+                ntodo=inp['user_ip'] +'\n'
+                todo2edit=inp['ex_list'][0]
+                todos=functions.get_todos()
+                index=todos.index(todo2edit)
+                todos[index]=ntodo
+                functions.write_todos(todos)
+                window['ex_list'].update(todos)
+
+            except IndexError:
+                psg.popup("Select a Todo.")
+        case "Complete":
+            try:
+                comp_todo = inp['ex_list'][0]
+                todos = functions.get_todos()
+                todos.remove(comp_todo)
+                window['ex_list'].update(values=todos)
+                functions.write_todos(todos)
+                window['user_ip'].update(value='')
+            except IndexError:
+                psg.popup("Select a Todo.")
+        case "ex_list":
+            try:
+                todos = functions.get_todos()
+                window['user_ip'].update(value=inp['ex_list'][0][0:-1])
+            except IndexError:
+                psg.popup("Enter a Todo.")
+        case "Exit":
+            break
         case psg.WIN_CLOSED:
             break
 
 window.close()
-
 
